@@ -1,8 +1,12 @@
 Teammates: Jennifer Roh, Amara Nwigwe, Arkin Satija, Kelsey Myton, Manmohit Singh, Timothy Park, Louis Xuan Hy Nguyen
 Project Ideas: 
 
-1. Twitter API
-
-2. Spotify API
-
-3. Color Blind - Google API 
+1. Twitter API + Fact Checker API
+  Utilize twitter and fact checker API to fact check high-profiled people's tweets
+  
+2. Spotify API + Image Grabber API
+  Mood image generator 
+  Utilize a photo grabber to display photos of the mood of the song that you are currently playing.
+  
+3. Google Cloud Vision API + 
+  Help people with color blindness to match outfits/home decors 
