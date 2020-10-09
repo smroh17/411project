@@ -1,15 +1,9 @@
 Teammates: Jennifer Roh, Amara Nwigwe, Arkin Satija, Kelsey Myton, Manmohit Singh, Timothy Park, Louis Xuan Hy Nguyen
 Project Ideas: 
 
-1. Twitter API + Fact Checker API
-  Utilize twitter and fact checker API to fact check high-profiled people's tweets
-  
-2. Spotify API + Image Grabber API
-  Mood image generator 
-  Utilize a photo grabber to display photos of the mood of the song that you are currently playing.
-  
-3. Google Cloud Vision API + 
-  Help people with color blindness to match outfits/home decors 
+1. Twitter Stock Sentiment Analysis
+The goal of this project is to parse real-time tweets and analyze the sentiment on businesses and how it affects their stock price. We will be using twitter’s API (Twitter Data Analysis & Social Listening) to grab real-time tweets. We will then use the Twitter Sentiment API (https://www.programmableweb.com/api/tweet-sentiment-rest-api) to analyze the sentiment of the tweets. By displaying the sentiment and the stock prices within a time period using a stock API (API,Documentation | Stock Prices | Quote Comparison) simultaneously, we will be able to see what impact tweets have on stock prices. For example, if Elon Musk uploads a tweet, we will be analyzing the general sentiment on the tweets that includes #ElonMusk and #Tesla for the next 12 hours and how Tesla’s stock price has changed during that time period. 
 
-4. Twitter API + Sentiment Analysis API
-  Analyze sentiment across social media platforms on businesses
+2. Home Designer
+This app will allow the user to take a picture or upload a picture of several furniture pieces and the app will create a pinterest board recommending other furniture pieces in a visual and stylistic way. We would use the Google Cloud Vision API (https://cloud.google.com/vision/docs/reference/rest/ ) to get the color, pattern, and texture of the furniture piece in the images. Then, we will use the Pinterest API (https://developers.pinterest.com/docs/getting-started/introduction/) to create a pinterest board as well as get images for the pinterest board from other boards on pinterest. We will use a database to store user profile information and the photos and a third-party authentication for Pinterest. 
+
