@@ -1,1 +1,2 @@
-
+Sentiment Analysis Feature
+As a user interested in trading a company’s stock, I want to assess the overall sentiment of the company through tweets so that I can know whether to place buy or sell orders. When I use the search engine to find the stock I want to trade, I will be given a graph with the stock price data and the sentiment score for each tweet associated with the company. I will also be able to view the live tweets that include the hashtag of the words related to the stock. Then, I should be able to assess how the overall sentiment of the company affects the stock price negatively or positively. If I search up a stock that doesn’t exist, I would get an error popup message saying that the stock wasn’t found. 
