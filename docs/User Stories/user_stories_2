@@ -1,1 +1,3 @@
+Time Period Selection Feature
+As a user who is interested in investing in a particular stock but does not know if it should be a long-term or short-term investment, I can search up the name of the stock using the app’s search engine feature and select different time periods I want it to display. I can select an one-hour time period option, which will display all of the tweets related to the company, the sentiment analysis score and the price change of the stock within that hour. I will be able to select time period options (1 hour, 6 hour, 12 hour, 24 hours, up to a month) to display. By seeing the price changes and differences in the sentiment analysis scores, I can make a decision whether the stock is worth a short-term or a long-term investment. 
 
