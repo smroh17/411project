@@ -1,7 +1,10 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import {test} from './stockPrice.js'
+
 
 function App() {
+  console.log(test);
   return (
     <div className="App">
       <header className="App-header">
