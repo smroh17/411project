@@ -1,6 +1,5 @@
 const Stocks = require('stocks.js');
 const stocks = new Stocks('01Y8MBKXLAP7V4CZ');
-//var stocks = new Stocks('SYTCQBUIU44BX2G4');
 
 
 // module.exports = {ß
@@ -17,21 +16,22 @@ const stocks = new Stocks('01Y8MBKXLAP7V4CZ');
 //       return stocks.timeSeries(options);
 //     }
 // }
-  const options = {
-    symbol: 'TSLA',
-    interval: 'daily',
-    start: new Date('2017-07-01'),
-    end: new Date('2017-07-09')
-  }
+const options = {
+  symbol: 'TSLA',
+  interval: 'daily',
+  amount: 10
+}
 
-  async function request () {
-    var result = await stocks.timeSeries(options);
-    
-     return result;
-  }
+async function request () {
+  var result = await stocks.timeSeries(options);
+  
+    console.log(result);
+    return result;
+}
 
-  module.exports = () => {
-    return request();
-  }
+let req = request();
 
-request();
+exports.req = req; 
+
+
+//request();

@@ -1,24 +1,18 @@
 // import logo from './logo.svg';
 import './App.css';
-import {test} from './stockPrice.js'
+//import {req} from './stockPrice.js';
+import * as mui from '@material-ui/core';
 
 
 function App() {
-  console.log(test);
   return (
     <div className="App">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
       <header className="App-header">
         <p>
-          CS411 PROJECT 
+          CS411 STOCK MACHINE
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <mui.Button variant="contained" color="primary">does this work?</mui.Button>
       </header>
     </div>
   );
