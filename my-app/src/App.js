@@ -6,7 +6,7 @@ import { fetchData } from './testStockPrice';
 
 
 function App() {
-  fetchData();
+  var plzwork = fetchData();
   return (
     <div className="App">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
@@ -14,10 +14,19 @@ function App() {
         <p>
           CS411 STOCK MACHINE
         </p>
+        <p>{plzwork} </p>
         <mui.Button variant="contained" color="primary">does this work?</mui.Button>
       </header>
     </div>
   );
 }
+
+Object.size = function(obj) {
+  var size = 0, key;
+  for (key in obj) {
+      if (obj.hasOwnProperty(key)) size++;
+  }
+  return size;
+};
 
 export default App;
