@@ -11,3 +11,6 @@ For example, to analyze the sentiment of Tesla tweets since November 28, 2020, y
 http://localhost:3000/api/tweets/tesla/2020-11-28
 
 This would analyze the sentiment of all Tesla tweets from November 28, 2020 to the present day.
+
+The response will be a JSON object that contains the list of tweets, the list of sentiment scores, and the mean sentiment score. 
+  
