@@ -9,6 +9,21 @@ var app = express();
 const Twit = require('twit');
 const Sentiment = require('sentiment');
 
+// Initializing the Twit instance
+const T = new Twit({
+  consumer_key: process.env.CONSUMER_KEY, // Twitter Developer - https://developer.twitter.com
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token: process.env.ACCESS_TOKEN,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET,
+  timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
+  strictSSL: true, // optional - requires SSL certificates to be valid.
+});
+
+// Calculating the mean of an array
+function calculate_mean(num_array) {
+  return num_array.reduce((a, b) => a + b, 0) / num_array.length;
+}
+
 // Listening on port 3000
 app.listen(3000, () => {
  console.log("Server running on port 3000");
@@ -19,16 +34,7 @@ app.get('/api/tweets/:company/:date', function (req, res){
     var company = req.params["company"].toLowerCase();
     var date = req.params["date"];
 
-    const T = new Twit({
-        consumer_key: process.env.CONSUMER_KEY, // Twitter Developer - https://developer.twitter.com
-        consumer_secret: process.env.CONSUMER_SECRET,
-        access_token: process.env.ACCESS_TOKEN,
-        access_token_secret: process.env.ACCESS_TOKEN_SECRET,
-        timeout_ms: 60 * 1000, // optional HTTP request timeout to apply to all requests.
-        strictSSL: true, // optional - requires SSL certificates to be valid.
-      });
-
-      T.get('search/tweets', { q: `${company} since:${date}`, count: 12, language: 'en'}, function(err, data, response) {
+    T.get('search/tweets', { q: `${company} since:${date}`, count: 300}, function(err, data, response) {
         var tweets = data.statuses;
         var sentiment_scores = [];
         var tweets_text = [];
@@ -37,19 +43,16 @@ app.get('/api/tweets/:company/:date', function (req, res){
         const sentiment = new Sentiment();
 
         for (var i = 0; i < tweets.length; i++) {
-            sentiment_scores.push(sentiment.analyze(tweets[i].text).score);
-            tweets_text.push(tweets[i].text)
-
-          }
-
-        function sentiment_mean(sentiment_scores) {
-              return sentiment_scores.reduce((a, b) => a + b, 0) / sentiment_scores.length;
+            if (tweets[i].lang == 'en') {
+              sentiment_scores.push(sentiment.analyze(tweets[i].text).score);
+              tweets_text.push(tweets[i].text)
+            }
           }
 
         response_obj.tweets = tweets_text;
         response_obj.sentiment_scores = sentiment_scores;
-        response_obj.mean_sentiment = sentiment_mean(sentiment_scores);
+        response_obj.mean_sentiment = calculate_mean(sentiment_scores);
 
         res.json(response_obj);
-      })
+    })
 }) 
