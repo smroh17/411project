@@ -2,8 +2,8 @@
 require('dotenv').config()
 
 // Importing express and app
-var express = require("express");
-var app = express();
+const express = require("express");
+const app = express();
 
 // Importing Twit and Sentiment
 const Twit = require('twit');
@@ -31,28 +31,28 @@ app.listen(3000, () => {
 
 // Creating API endpoint for getting tweets and calculating sentiment
 app.get('/api/tweets/:company/:date', function (req, res){
-    var company = req.params["company"].toLowerCase();
-    var date = req.params["date"];
+  const company = req.params["company"].toLowerCase();
+  const date = req.params["date"];
 
-    T.get('search/tweets', { q: `${company} since:${date}`, count: 300}, function(err, data, response) {
-        var tweets = data.statuses;
-        var sentiment_scores = [];
-        var tweets_text = [];
-        var response_obj = {};
+  T.get('search/tweets', { q: `${company} since:${date}`, count: 300}, function(err, data, response) {
+    const tweets = data.statuses;
+    const sentiment_scores = [];
+    const tweets_text = [];
+    const response_obj = {};
 
-        const sentiment = new Sentiment();
+    const sentiment = new Sentiment();
 
-        for (var i = 0; i < tweets.length; i++) {
-            if (tweets[i].lang == 'en') {
-              sentiment_scores.push(sentiment.analyze(tweets[i].text).score);
-              tweets_text.push(tweets[i].text)
-            }
-          }
+    for (let i = 0; i < tweets.length; i++) {
+      if (tweets[i].lang === 'en') {
+        sentiment_scores.push(sentiment.analyze(tweets[i].text).score);
+        tweets_text.push(tweets[i].text)
+      }
+    }
 
-        response_obj.tweets = tweets_text;
-        response_obj.sentiment_scores = sentiment_scores;
-        response_obj.mean_sentiment = calculate_mean(sentiment_scores);
+    response_obj.tweets = tweets_text;
+    response_obj.sentiment_scores = sentiment_scores;
+    response_obj.mean_sentiment = calculate_mean(sentiment_scores);
 
-        res.json(response_obj);
-    })
-}) 
+    res.json(response_obj);
+  })
+})
