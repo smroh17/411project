@@ -6,7 +6,6 @@ import { fetchData } from './testStockPrice';
 
 
 function App() {
-  var plzwork = fetchData();
   return (
     <div className="App">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
@@ -14,8 +13,7 @@ function App() {
         <p>
           CS411 STOCK MACHINE
         </p>
-        <p>{plzwork} </p>
-        <mui.Button variant="contained" color="primary">does this work?</mui.Button>
+        <mui.Button variant="contained" color="primary" onClick={fetchData}>does this work?</mui.Button>
       </header>
     </div>
   );
