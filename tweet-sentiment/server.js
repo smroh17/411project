@@ -4,10 +4,15 @@ require('dotenv').config()
 // Importing express and app
 const express = require("express");
 const app = express();
+const cors = require('cors');
+
+app.use(cors());
 
 // Importing Twit and Sentiment
 const Twit = require('twit');
 const Sentiment = require('sentiment');
+
+
 
 // Initializing the Twit instance
 const T = new Twit({
@@ -24,9 +29,9 @@ function calculate_mean(num_array) {
   return num_array.reduce((a, b) => a + b, 0) / num_array.length;
 }
 
-// Listening on port 3000
-app.listen(3000, () => {
- console.log("Server running on port 3000");
+// Listening on port 5000
+app.listen(5000, () => {
+ console.log("Server running on port 5000");
 });
 
 // Creating API endpoint for getting tweets and calculating sentiment
