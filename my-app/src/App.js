@@ -14,11 +14,6 @@ function App() {
     axios.get("http://localhost:5000/api/tweets/tesla/2020-11-28").then((response) => {//tweet sentiment analysis
       console.log(response.data);
     });
-    // axios.get("http://localhost:4000").then((response) => {
-      // setUsers({users: response.data});
-      // console.log(users);
-      // console.log('asdzsd')
-    // })
     axios.get('http://localhost:8000/api/stocks/tsla').then((response) => {//stock api
       console.log(response.data);
     });
@@ -36,6 +31,13 @@ function App() {
             console.log(data);
           })
         }}>does this work?</mui.Button>
+        <mui.Button variant="contained" color="primary" onClick={() => {
+          fetchData().then(data => {
+            axios.get("http://localhost:4000/auth/login").then(response => {
+              console.log(response);
+            })
+          })
+        }}>Login</mui.Button>
       </header>
     </div>
   );
