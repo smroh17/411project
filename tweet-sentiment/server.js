@@ -24,9 +24,9 @@ function calculate_mean(num_array) {
   return num_array.reduce((a, b) => a + b, 0) / num_array.length;
 }
 
-// Listening on port 3000
-app.listen(3000, () => {
- console.log("Server running on port 3000");
+// Listening on port 5000
+app.listen(5000, () => {
+ console.log("Server running on port 5000");
 });
 
 // Creating API endpoint for getting tweets and calculating sentiment
@@ -34,25 +34,24 @@ app.get('/api/tweets/:company/:date', function (req, res){
     var company = req.params["company"].toLowerCase();
     var date = req.params["date"];
 
-    T.get('search/tweets', { q: `${company} since:${date}`, count: 300}, function(err, data, response) {
-        var tweets = data.statuses;
-        var sentiment_scores = [];
-        var tweets_text = [];
-        var response_obj = {};
+    T.get('search/tweets', { q: `${company} since:${date}`, count: 300}).then(function (data) {
+      var tweets = data.data.statuses;
+      var sentiment_scores = [];
+      var tweets_text = [];
+      var response_obj = {};
 
-        const sentiment = new Sentiment();
+      const sentiment = new Sentiment();
 
-        for (var i = 0; i < tweets.length; i++) {
-            if (tweets[i].lang == 'en') {
-              sentiment_scores.push(sentiment.analyze(tweets[i].text).score);
-              tweets_text.push(tweets[i].text)
-            }
+      for (var i = 0; i < tweets.length; i++) {
+          if (tweets[i].lang == 'en') {
+            sentiment_scores.push(sentiment.analyze(tweets[i].text).score);
+            tweets_text.push(tweets[i].text)
           }
+        }
 
-        response_obj.tweets = tweets_text;
-        response_obj.sentiment_scores = sentiment_scores;
-        response_obj.mean_sentiment = calculate_mean(sentiment_scores);
+      response_obj.tweets = tweets_text;
+      response_obj.sentiment_scores = sentiment_scores;
+      response_obj.mean_sentiment = calculate_mean(sentiment_scores);
 
-        res.json(response_obj);
-    })
-}) 
+      res.json(response_obj);
+})})
