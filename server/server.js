@@ -3,7 +3,12 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const authRoutes = require('./routes/auth-routes');
-require('dotenv').config();
+
+require('dotenv').config({
+  path: './config/.env'
+});
+
+const passportSetup = require('./config/passport-setup'); //runs the new google strategy and now it knows what 'google' strategy is being used in auth-routes
 
 const app = express();
 
@@ -21,16 +26,15 @@ if (process.env.NODE_ENV === 'development') {
   //Cors allows us to connect with react at port 3000 without cross origin request sharing (CORS) issues
 }
 
-//setup routes
+//setup auth-routes
 app.use('/auth', authRoutes);
 
 //setup database
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true,  useUnifiedTopology: true });
+const connection = mongoose.createConnection(uri, {useNewUrlParser: true, useCreateIndex: true,  useUnifiedTopology: true }); //for multiple instance of connection we use mongoose.createConnection(), .connect() works fine here too
 
-const connection = mongoose.connection;
 connection.once('open', () => {
-  console.log('MongoDB database connection established successfully');
+  console.log('MongoDB database connection established successfully')
 })
 
 const port = process.env.PORT || 4000;
@@ -38,5 +42,3 @@ const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 })
-
-
