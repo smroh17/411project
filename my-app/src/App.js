@@ -1,52 +1,66 @@
-// import logo from './logo.svg';
-import './App.css';
-import './testStockPrice';
-import axios from 'axios';
-import * as mui from '@material-ui/core';
-import { fetchData } from './testStockPrice';
-import {useEffect, useState} from "react";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Home from "./components/home";
+import StockGraph from "./components/stockGraph";
+
+class App extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            Search: '',
+            result: [],
+            //These are the choosen name and symbol changes
+            companyName: '',
+            companySymbol: ''
+        }
+    }
+
+    updateCN = (newCompanyName) => {
+        this.setState({
+            companyName: newCompanyName
+        });
+    }
+
+    updateCS = (newCompanySymbol) => {
+        this.setState({
+            companySymbol: newCompanySymbol
+        });
+    }
+
+    updateSearch = (newSearch) => {
+        this.setState({
+            Search: newSearch
+        });
+    }
+
+    updateResult = (newResult) => {
+        this.setState({
+            result: newResult
+        });
+    }
 
 
-function App() {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/api/tweets/tesla/2020-11-28").then((response) => {//tweet sentiment analysis
-      console.log(response.data);
-    });
-    // axios.get("http://localhost:4000").then((response) => {
-      // setUsers({users: response.data});
-      // console.log(users);
-      // console.log('asdzsd')
-    // })
-    axios.get('http://localhost:8000/api/stocks/tsla').then((response) => {//stock api
-      console.log(response.data);
-    });
-  }, []); // empty array parameter ensures this call only runs once like componentDidMount, adding variables will call the function again if the variables ever get updated or changed.
-
-  return (
-    <div className="App">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-      <header className="App-header">
-        <p>
-          CS411 STOCK MACHINE
-        </p>
-        <mui.Button variant="contained" color="primary" onClick={() => {
-          fetchData().then(data => {
-            console.log(data);
-          })
-        }}>does this work?</mui.Button>
-      </header>
-    </div>
-  );
+    render() { 
+        return ( 
+            <Router>
+                <div>
+                    <Route 
+                        path="/" 
+                        render = {(props) => (
+                            <Home {...props} companyName={this.state.companyName} companySymbol = {this.state.companySymbol} Search={this.state.Search} 
+                            updateCN = {this.updateCN} updateCS = {this.updateCS} updateSearch = {this.updateSearch} updateResult = {this.updateResult}
+                            result = {this.state.result} isAuthed={true} />
+                        )} 
+                    />
+                    <Route
+                        path="/stockgraph" 
+                        render = {(props) => (
+                            <StockGraph {...props} companyName={this.state.companyName} companySymbol = {this.state.companySymbol} isAuthed = {true} />
+                        )} />
+                </div>
+          </Router>
+         );
+    }
 }
-
-Object.size = function(obj) {
-  let size = 0, key;
-  for (key in obj) {
-      if (obj.hasOwnProperty(key)) size++;
-  }
-  return size;
-};
-
+ 
 export default App;

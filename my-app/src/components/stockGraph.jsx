@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
-import {fetchData} from '../testStockPrice';
 import * as mui from '@material-ui/core';
 import LineGraph from '@chartiful/react-line-graph';
 import './stockGraph.css';
+import './home';
 //npm i @chartiful/react-chart-builder @chartiful/react-line-graph to install dependencies for LineGraph
 
+const alpha = require('alphavantage')({key: 'qweqweqwe'});
+
 class StockGraph extends Component {
+
     
     constructor(props){
         super(props);
         this.state = {
-            tesla: {},
-            name: "Apple"
+            company: {}
         };
     }
 
+
+    fetchData = () => {
+        console.log(this.props)
+        return alpha.data.intraday(this.props.companySymbol, 'compact', 'json', '60min').then(data => {
+            return data;
+        });
+    };
+
     render() { 
-        let tesla = this.state.tesla;
+        let company = this.state.company;
         let prices = [];
-        let dates = [];
 
 
         return (
@@ -27,27 +36,21 @@ class StockGraph extends Component {
                 <div className = "App">
                 
                     <mui.Button variant="contained" color="primary" onClick={() => {
-                        fetchData().then(data => {
-                            this.setState({tesla: data['Time Series (60min)']})
+                        this.fetchData().then(data => {
+                            this.setState({company: data['Time Series (60min)']})
                         })
                     
                     }}>Get Prices</mui.Button>
                 </div>
                 <div>
                 {       
-                    Object.keys(tesla).map((value)=>{
-                        prices.push(tesla[value]["1. open"])
+                    Object.keys(company).map((value)=>{
+                        prices.push(company[value]["1. open"])
                     })
-                }   
-
-                {
-                    Object.keys(tesla).map((value)=>{
-                        dates.push(value)
-                    })
-                }
+                }  
                 </div>
-                <p>{this.state.name}</p>
-                {console.log(dates.slice(0, dates.length/ 12).reverse())}
+                <p>{this.props.companyName}</p>
+                {console.log(this.props.companyName, this.props.companySymbol)}
                 <LineGraph
                     data = {prices.slice(0, prices.length / 12).reverse()}
                     width={1100}
