@@ -13,7 +13,6 @@ const Twit = require('twit');
 const Sentiment = require('sentiment');
 
 
-
 // Initializing the Twit instance
 const T = new Twit({
   consumer_key: process.env.CONSUMER_KEY, // Twitter Developer - https://developer.twitter.com
