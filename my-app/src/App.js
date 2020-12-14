@@ -1,31 +1,11 @@
 import React, { Component } from 'react'
-import { Button, Input, Footer, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
+import axios from 'axios';
+import { Card, CardBody, CardTitle, CardText } from 'mdbreact';
+import './testStockPrice';
+import * as mui from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 
-class Stock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      stocks:[]
-      //companyName: [],
-      //companySymbol: []
-    }
-  }
-  render() {
-    return (
-    <div>
-      <h1>Stock Results</h1>
-    <div className="col-md-3" style={{ marginTop : '20px' }}>
-            <Card>
-                <CardBody>
-                    <p className=""><img src={blankImg} className={ "flag flag-"+code } alt={country.name} /></p>
-                    <CardTitle title={country.name}>{country.name.substring(0, 15)}{ country.name.length > 15 && "..."}</CardTitle>
-                </CardBody>
-            </Card>
-        </div>
-    </div>
-    )
-    }
-}
+import './App.css';
 
 
 class App extends Component {
@@ -34,84 +14,79 @@ class App extends Component {
         this.state = {
             Search: '',
             result: [],
+            //These are the choosen name and symbol changes
             companyName: '',
             companySymbol: ''
         }
     }
-
+    //when form is submitted, call the API for search results
     handleSubmit = (event) => {
         event.preventDefault()
         const data = this.state
-        console.log(this.fetchData(data.Search));
-        this.setState({
-          result: this.fetchData(data.Search)
-      })
-        console.log("Final data is", this.state)
+        const API_KEY= process.env.API_KEY;
+        let API_Call= `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${data.Search}&apikey=${API_KEY}`;
+        axios.get(API_Call).then((response) => {
+       console.log(response.data);
+       this.setState({
+        result: response.data.bestMatches
+     });
 
-    }
+    });
+
+  }
 
     handleInputChange = (event) => {
         event.preventDefault()
-       // console.log(event)
-       // console.log(event.target.name)
-       // console.log(event.target.value)
        this.setState({
            [event.target.name]: event.target.value
        })
     }
 
-    // componentDidMount(){
-    //     this.inputFullNameRef.current.focus()
-    // }
   render () {
       const {myFullName} = this.state
     return (
-      <div>
-        <h1>Forms and Inputs</h1>
-        <p>Full name is: {myFullName}</p>
+      <div  className="App">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+        <header className="App-header">
+        <h1>Stock Machine</h1>
         <form onSubmit={this.handleSubmit}>
-            <input type='text' name='Search'  onChange={this.handleInputChange}/>
-          <p><button>Search</button></p>
-        <Stock>
-
-        </Stock>
+            <input type='text' name='Search' onChange={this.handleInputChange}/>
+          <mui.Button variant="contained" color="primary" type="submit">Search</mui.Button>
+          {this.state.result.map((val, key) =>{
+            return(
+              <div className="card">
+            <Card border="dark" style={{ width: '30rem', height: '5rem' }} onClick={() => {this.chooseStock(val["2. name"], val["1. symbol"] )}}>
+            <CardBody>
+                <CardTitle style={{ color: '#000000' }} title={val["2. name"]}>{val["2. name"]}</CardTitle>
+                <CardText>{val["1. symbol"]}</CardText>
+            </CardBody>
+        </Card>
+        </div>
+            );
+          }
+          )
+        }
+          <div className="col-md-3" style={{ marginTop : '20px' }}>
+        </div>
         </form>
+        </header>
       </div>
     )
   }
-  fetchData(keyword){
-    const pointerToThis= this; 
-    const API_KEY= process.env.API_KEY;
-    //const keywords="tsla";
-    let API_Call= `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${keyword}&apikey=${API_KEY}`;
-    let stocksFunction= [];
-    
-    fetch(API_Call)
-    .then(
-      function(response) {
-        return response.json();
-      }
-    )
-    // .then(
-    //   function(data) {
-    //     //console.log(data);
-    //     var len= data['bestMatches'].length;
-        
-    //     for (var i = 0; i < len; i++) {
-    //         stocksFunction.push([[data.bestMatches[i]["1. symbol"]],[data.bestMatches[i]["2. name"]]]);
-            
-    //     }
-    //     return stocksFunction;
-    //     //console.log(stocksFunction);
-    //   //   pointerToThis.setState({
-    //   //     // companyName: stocksFunction,
-    //   //     // companySymbol: stocksFunction
-    //   //     result: stocksFunction
 
-    //   // });
-    //   }
-    // )
-    }
+  //called when user clicks on a stock card
+  async chooseStock(name, symbol){
+    console.log("choosen", name);
+    console.log("choosen", symbol);
+    var x = await this.setState({
+      companyName: name,
+      companySymbol: symbol
+   });
+   console.log(this.state);
+   //now stock is choosen, navigate to next page here 
+
+  }
+  
 
 }
 
