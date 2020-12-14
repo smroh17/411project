@@ -15,7 +15,7 @@ const authCheck = (req, res, next) => {
 
 router.get('/', authCheck, (req, res) => {
   User.findById(req.user).then((user) => {
-    res.send('you are logged in, this is your profile - ' + user.username);
+    res.redirect('http://localhost:3000/') // next time do tokens and send it to frontend
   });
 
 })

@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth-routes');
 const profileRoutes = require('./routes/profile-routes');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 require('dotenv').config({
   path: './config/.env'
@@ -17,20 +18,27 @@ const app = express();
 
 //configure for development
 if (process.env.NODE_ENV === 'development') {
+  //Cors allows us to connect with react at port 3000 without cross origin request sharing (CORS) issues
   app.use(cors({
     origin: process.env.CLIENT_URL
   }))
 
-  app.use(morgan('dev'))
+
   // Morgan gives information about each request
-  //Cors allows us to connect with react at port 3000 without cross origin request sharing (CORS) issues
+  app.use(morgan('dev'))
 }
+
+// Where app -> const app = express();
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.use(cookieSession({
   maxAge: 24*60*60*1000,
   keys: [process.env.cookieKey]
 }))
-app.use(cors());
 app.use(express.json());
 
 //initialize passport

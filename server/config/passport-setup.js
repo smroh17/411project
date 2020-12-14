@@ -17,7 +17,8 @@ passport.use(
     // options for google strategy
     callbackURL: '/auth/google/redirect',
     clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET
+    clientSecret: process.env.CLIENT_SECRET,
+    proxy: true
   }, (accessToke, refreshToken, profile, done) => {
     // check if user exists in our db
     User.findOne({googleId: profile.id}).then((currentUser) => {
