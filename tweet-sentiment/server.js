@@ -39,16 +39,16 @@ app.get('/api/tweets/:company/:date', function (req, res){
   const company = req.params["company"].toLowerCase();
   const date = req.params["date"];
 
-  T.get('search/tweets', { q: `${company} since:${date}`, count: 300}, function(err, data, response) {
-    const tweets = data.statuses;
-    const sentiment_scores = [];
-    const tweets_text = [];
-    const response_obj = {};
+  T.get('search/tweets', { q: `${company} since:${date}`, count: 300}).then(function (data) {
+    var tweets = data.data.statuses;
+    var sentiment_scores = [];
+    var tweets_text = [];
+    var response_obj = {};
 
     const sentiment = new Sentiment();
 
-    for (let i = 0; i < tweets.length; i++) {
-      if (tweets[i].lang === 'en') {
+    for (var i = 0; i < tweets.length; i++) {
+      if (tweets[i].lang == 'en') {
         sentiment_scores.push(sentiment.analyze(tweets[i].text).score);
         tweets_text.push(tweets[i].text)
       }
@@ -59,5 +59,6 @@ app.get('/api/tweets/:company/:date', function (req, res){
     response_obj.mean_sentiment = calculate_mean(sentiment_scores);
 
     res.json(response_obj);
+  
   })
 })
