@@ -23,13 +23,13 @@ class App extends Component {
 
     updateCS = (newCompanySymbol) => {
         this.setState({
-            companySymbol: newCompanySymbol
+          companySymbol: newCompanySymbol
         });
     }
 
     updateSearch = (newSearch) => {
         this.setState({
-            Search: newSearch
+          Search: newSearch
         });
     }
 
@@ -45,7 +45,7 @@ class App extends Component {
             <Router>
                 <div>
                     <Route 
-                        path="/" 
+                        exact path="/" 
                         render = {(props) => (
                             <Home {...props} companyName={this.state.companyName} companySymbol = {this.state.companySymbol} Search={this.state.Search} 
                             updateCN = {this.updateCN} updateCS = {this.updateCS} updateSearch = {this.updateSearch} updateResult = {this.updateResult}
@@ -53,7 +53,7 @@ class App extends Component {
                         )} 
                     />
                     <Route
-                        path="/stockgraph" 
+                        exact path="/stockgraph" 
                         render = {(props) => (
                             <StockGraph {...props} companyName={this.state.companyName} companySymbol = {this.state.companySymbol} isAuthed = {true} />
                         )} />

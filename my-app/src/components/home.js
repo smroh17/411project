@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter, NavLink} from "react-router-dom";
 import axios from 'axios';
-import { Card, CardBody, CardTitle, CardText } from 'mdbreact';
-//import './testStockPrice';
+import { Card, CardBody, CardTitle, CardText } from 'mdbreact'
 import * as mui from '@material-ui/core';
-//import { IconButton } from '@material-ui/core';
 
 import './home.css';
 
@@ -37,16 +35,17 @@ class Home extends Component {
     }
 
   render () {
-    //const {myFullName} = this.state
     return (
       <div  className="App">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         <header className="App-header">
         <h1>Stock Machine</h1>
+        <p>Search for a stock below</p>
         <form onSubmit={this.handleSubmit}>
             <input type='text' name='Search' onChange={this.handleInputChange}/>
           <mui.Button variant="contained" color="primary" type="submit">Search</mui.Button>
-          {this.props.result.map((val, key) =>{
+          <NavLink to = "/stockgraph">
+          {this.props.result.map((val) =>{
             return(
               <div className="card">
             <Card border="dark" style={{ width: '30rem', height: '5rem' }} onClick={() => {this.chooseStock(val["2. name"], val["1. symbol"] )}}>
@@ -60,11 +59,10 @@ class Home extends Component {
           }
           )
         }
+        </NavLink>
           <div className="col-md-3" style={{ marginTop : '20px' }}>
         </div>
-        <BrowserRouter>
-            <NavLink to = "/stockgraph">Get Prices and Tweet Sentiment</NavLink>
-        </BrowserRouter>
+      
         </form>
         </header>
       </div>
@@ -77,7 +75,7 @@ class Home extends Component {
     console.log("choosen", symbol);
     this.props.updateCN (name) 
     this.props.updateCS(symbol)
-   console.log(this.state);
+   console.log(this.props.companySymbol);
    //now stock is choosen, navigate to next page here 
 
   }
