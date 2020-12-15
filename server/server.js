@@ -28,6 +28,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
 
+
 // Where app -> const app = express();
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

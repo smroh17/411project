@@ -11,8 +11,15 @@ class App extends Component {
             result: [],
             //These are the choosen name and symbol changes
             companyName: '',
-            companySymbol: ''
+            companySymbol: '',
+            username: ''
         }
+    }
+
+    updateUsername = (newName) => {
+        this.setState({
+            username: newName
+        })
     }
 
     updateCN = (newCompanyName) => {
@@ -49,7 +56,7 @@ class App extends Component {
                         render = {(props) => (
                             <Home {...props} companyName={this.state.companyName} companySymbol = {this.state.companySymbol} Search={this.state.Search}
                             updateCN = {this.updateCN} updateCS = {this.updateCS} updateSearch = {this.updateSearch} updateResult = {this.updateResult}
-                            result = {this.state.result} isAuthed={true} />
+                            result = {this.state.result} isAuthed={true} username = {this.state.username} updateUsername = {this.updateUsername} />
                         )}
                     />
                     <Route
