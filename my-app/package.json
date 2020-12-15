@@ -16,9 +16,11 @@
     "bootstrap": "^4.5.3",
     "expo": "~36.0.0",
     "mdbreact": "^5.0.1",
+    "query-string": "^6.13.7",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "~16.9.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "stocks.js": "0.0.19",
     "typescript": "^4.0.5",
@@ -28,7 +30,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "web": "expo start --web",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
